@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#1c0b12" />
+    <title>Handout — “Establish … a House of God” (D&C 88)</title>
+    <meta name="description"
+        content="One‑page handout for Doctrine and Covenants 88 — exact scripture quotes, the seven ‘house of God’ pattern, simple weekly practices, and a reflection prompt." />
+    <style>
+        /* Mobile‑first, burgundy theme (single column) */
+        :root {
+            /* Deep burgundy page */
+            --bg: #1c0b12;
+            /* page background */
+            --bg-2: #240e18;
+            /* subtle gradient stop */
+            --fg: #f7eef2;
+            /* near‑white text */
+            --muted: #e2c6cf;
+            /* soft rose */
+            /* Lighter burgundy cards (div sections) */
+            --card: #2b121a;
+            --card-2: #351721;
+            --card-border: rgba(255, 255, 255, 0.06);
+            --radius: 18px;
+            --shadow: 0 10px 28px rgba(0, 0, 0, .35);
+            --accent: #f3a6b7;
+            /* blush accent */
+            --ring: rgba(243, 166, 183, .45);
+        }
+
+        /* Base layout */
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            -webkit-text-size-adjust: 100%;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            background: radial-gradient(900px 500px at 50% -10%, var(--bg-2), transparent 60%), linear-gradient(180deg, var(--bg), var(--bg-2));
+            color: var(--fg);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-size: 17px;
+            line-height: 1.55;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        header {
+            padding: 1.75rem 1rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: clamp(1.25rem, 4.5vw, 1.6rem);
+            font-weight: 800;
+            letter-spacing: .2px;
+        }
+
+        header p {
+            margin: .45rem auto 0;
+            color: var(--muted);
+            max-width: 36ch;
+        }
+
+        .wrap {
+            max-width: 46rem;
+            margin: 0 auto;
+            padding: .5rem 1rem 1.2rem;
+        }
+
+        /* Single column cards for mobile */
+        .grid {
+            display: grid;
+            gap: .9rem;
+            grid-template-columns: 1fr;
+        }
+
+        section.card {
+            background: linear-gradient(180deg, var(--card), var(--card-2));
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: .9rem .95rem 1rem;
+            border: 1px solid var(--card-border);
+            text-align: center;
+            /* center content in each div/card */
+        }
+
+        h2 {
+            margin: .1rem 0 .55rem;
+            font-size: 1.02rem;
+            letter-spacing: .2px;
+        }
+
+        ul {
+            margin: .35rem 0 0 0;
+            padding: 0;
+            list-style-position: inside;
+        }
+
+        li {
+            margin: .4rem 0;
+        }
+
+        .note {
+            color: var(--muted);
+            font-size: .94rem;
+            text-align: center;
+        }
+
+        /* Images — optimized for phones */
+        .section-img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            margin: 0 0 .7rem;
+            background: #4a1f2a;
+            border: 1px solid var(--card-border);
+        }
+
+        /* Scripture chips — larger tap targets */
+        a.verse {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: .42rem;
+            padding: .32rem .8rem;
+            min-height: 44px;
+            /* thumb target */
+            border-radius: 999px;
+            font-weight: 760;
+            line-height: 1.15;
+            background: rgba(243, 166, 183, .16);
+            border: 1px solid rgba(243, 166, 183, .45);
+            color: var(--fg);
+            box-shadow: inset 0 -1px 0 rgba(243, 166, 183, .18);
+            transition: transform .12s ease, background-color .12s ease, border-color .12s ease;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            a.verse:hover {
+                transform: translateY(-1px);
+                background: rgba(243, 166, 183, .22);
+                border-color: rgba(243, 166, 183, .6);
+            }
+        }
+
+        a.verse:focus-visible {
+            outline: 3px solid var(--ring);
+            outline-offset: 2px;
+        }
+
+        a.verse svg {
+            width: 15px;
+            height: 15px;
+            opacity: .8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.4rem 1rem 1.6rem;
+            color: var(--muted);
+            font-size: .95rem;
+        }
+
+        /* Modal — cohesive with burgundy */
+        .backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 10, 14, .6);
+            backdrop-filter: blur(6px);
+            display: none;
+            place-items: center;
+            z-index: 50;
+        }
+
+        .backdrop[aria-hidden="false"] {
+            display: grid;
+        }
+
+        .modal {
+            background: linear-gradient(180deg, var(--card), var(--card-2));
+            color: var(--fg);
+            width: min(640px, 92vw);
+            border-radius: 18px;
+            box-shadow: 0 28px 60px rgba(0, 0, 0, .45);
+            border: 1px solid var(--card-border);
+        }
+
+        .modal header {
+            padding: .8rem 1rem;
+            border-bottom: 1px solid var(--card-border);
+            text-align: left;
+        }
+
+        .modal header h3 {
+            margin: 0;
+            font-size: 1.02rem;
+        }
+
+        .modal .content {
+            padding: .85rem 1rem;
+            font-size: 1rem;
+        }
+
+        .modal .actions {
+            display: flex;
+            gap: .6rem;
+            justify-content: space-between;
+            align-items: center;
+            padding: .75rem 1rem 1rem;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .btn {
+            font: inherit;
+            border-radius: 999px;
+            padding: .62rem .95rem;
+            border: 1px solid var(--card-border);
+            background: #3b1720;
+            color: var(--fg);
+            cursor: pointer;
+        }
+
+        .btn.primary {
+            background: var(--accent);
+            color: #1a0b10;
+            border-color: transparent;
+            box-shadow: 0 10px 22px rgba(243, 166, 183, .28);
+            font-weight: 700;
+        }
+
+        /* Small screen fine‑tuning */
+        @media (max-width: 360px) {
+            body {
+                font-size: 16px;
+            }
+
+            header h1 {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (min-width: 480px) {
+            body {
+                font-size: 18px;
+            }
+
+            h2 {
+                font-size: 1.08rem;
+            }
+        }
+
+        @media (min-width: 640px) {
+            body {
+                font-size: 19px;
+            }
+
+            .wrap {
+                padding: 1rem 1.5rem 1.5rem;
+            }
+        }
+
+        /* Print */
+        @media print {
+            body {
+                background: #fff;
+                color: #000;
+            }
+
+            header {
+                background: none;
+                padding-bottom: .6rem;
+            }
+
+            section.card {
+                box-shadow: none;
+                background: #fff;
+                color: #000;
+                border: 1px solid #ddd;
+                text-align: left;
+            }
+
+            .section-img,
+            a.verse svg {
+                display: none;
+            }
+
+            ul {
+                list-style-position: outside;
+                margin-left: 1rem;
+            }
+
+            a.verse {
+                text-decoration: underline;
+                background: transparent;
+                border: none;
+                padding: 0;
+                font-weight: 700;
+                color: #000;
+            }
+
+            .backdrop {
+                display: none !important;
+            }
+
+            footer {
+                color: #444;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>📄 Handout — “Establish … a House of God” (D&C 88)</h1>
+        <p class="note">Exact scripture quotes • The seven “house of God” pattern • Simple weekly practices • Reflection
+            prompt</p>
+    </header>
+
+    <main>
+        <div class="wrap">
+            <div class="grid">
+                <!-- SECTION: VERSES -->
+                <section class="card" aria-labelledby="verses-h">
+                    <!-- Replace src with your own image URL -->
+                    <img class="section-img" src="https://content.churchofjesuschrist.org/acp/bc/cp/Europe/United%20Kingdom/news/2024/04-april/1200x675/rediscovering-the-scriptures-through-a-childs-eyes-1.jpeg"
+                        alt="Illustration for key verses" />
+                    <h2 id="verses-h">📜 Key verses (read verbatim)</h2>
+                    <ul>
+                        <li><strong><a class="verse" data-modal="dc88-63"
+                                    href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/88?id=p63&lang=eng#p63"
+                                    target="_blank" rel="noopener"
+                                    aria-label="Open D&C 88:63 on ChurchofJesusChrist.org">D&amp;C 88:63
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path fill="currentColor"
+                                            d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z" />
+                                    </svg>
+                                </a></strong> — “Draw near unto me and I will draw near unto you; seek me diligently and
+                            ye shall find me; ask, and ye shall receive; knock, and it shall be opened unto you.”</li>
+                        <li><strong><a class="verse" data-modal="dc88-67"
+                                    href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/88?id=p67&lang=eng#p67"
+                                    target="_blank" rel="noopener"
+                                    aria-label="Open D&C 88:67 on ChurchofJesusChrist.org">D&amp;C 88:67
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path fill="currentColor"
+                                            d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z" />
+                                    </svg>
+                                </a></strong> — “And if your eye be single to my glory, your whole bodies shall be
+                            filled with light; and there shall be no darkness in you; and that body which is filled with
+                            light comprehendeth all things.”</li>
+                        <li><strong><a class="verse" data-modal="dc88-118"
+                                    href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/88?id=p118&lang=eng#p118"
+                                    target="_blank" rel="noopener"
+                                    aria-label="Open D&C 88:118 on ChurchofJesusChrist.org">D&amp;C 88:118
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path fill="currentColor"
+                                            d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z" />
+                                    </svg>
+                                </a></strong> — “And as all have not faith, seek ye diligently and teach one another
+                            words of wisdom; yea, seek ye out of the best books words of wisdom; seek learning, even by
+                            study and also by faith.”</li>
+                        <li><strong><a class="verse" data-modal="dc88-119"
+                                    href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/88?id=p119&lang=eng#p119"
+                                    target="_blank" rel="noopener"
+                                    aria-label="Open D&C 88:119 on ChurchofJesusChrist.org">D&amp;C 88:119
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path fill="currentColor"
+                                            d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z" />
+                                    </svg>
+                                </a></strong> — “Organize yourselves; prepare every needful thing; and establish a
+                            house, even a house of prayer, a house of fasting, a house of faith, a house of learning, a
+                            house of glory, a house of order, a house of God.”</li>
+                    </ul>
+                </section>
+
+                <!-- SECTION: PATTERN LIST -->
+                <section class="card" aria-labelledby="pattern-h">
+                    <!-- Replace src with your own image URL -->
+                    <img class="section-img" src="https://www.churchofjesuschrist.org/imgs/9pc3y1my5h8o4rhhpcqnforw6a5mvbdco383d31t/full/%21500%2C/0/default"
+                        alt="Illustration for the house of God pattern" />
+                    <h2 id="pattern-h">🏛️ The “house of God” pattern (v.119)</h2>
+                    <ul>
+                        <li>House of Prayer</li>
+                        <li>House of Fasting</li>
+                        <li>House of Faith</li>
+                        <li>House of Learning</li>
+                        <li>House of Glory</li>
+                        <li>House of Order</li>
+                        <li>House of God</li>
+                    </ul>
+                </section>
+
+                <!-- SECTION: PRACTICES -->
+                <section class="card" aria-labelledby="practice-h">
+                    <!-- Replace src with your own image URL -->
+                    <img class="section-img" src="https://placehold.co/800x450/4a1f2a/f7eef2?text=Practice+Image"
+                        alt="Illustration for weekly practices" />
+                    <h2 id="practice-h">🧭 Try one simple practice this week</h2>
+                    <ul>
+                        <li><strong>House of Prayer:</strong> set a daily 2‑minute prayer (family or personal).</li>
+                        <li><strong>House of Learning:</strong> read one verse together (or solo) before bed.</li>
+                        <li><strong>House of Order:</strong> post one spiritual goal on the fridge or in phone notes.
+                        </li>
+                    </ul>
+                    <p class="note">Tip: Keep it easy. Small and steady wins.</p>
+                </section>
+
+                <!-- SECTION: REFLECTION -->
+                <section class="card" aria-labelledby="reflect-h">
+                    <!-- Replace src with your own image URL -->
+                    <img class="section-img" src="https://placehold.co/800x450/4a1f2a/f7eef2?text=Reflection+Image"
+                        alt="Illustration for reflection prompt" />
+                    <h2 id="reflect-h">📝 Reflection prompt</h2>
+                    <p>Which “house” will I focus on this week? What single action will I take before next Sunday?</p>
+                    <p class="note">Write one sentence each day. Share one sentence next Sunday.</p>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 — D&C 88 Handout. Print this page to share.</p>
+    </footer>
+
+    <!-- Modals (one per scripture) -->
+    <div class="backdrop" id="modal-root" aria-hidden="true">
+        <article class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"
+            aria-describedby="modal-body">
+            <header>
+                <h3 id="modal-title">Scripture</h3>
+            </header>
+            <div class="content" id="modal-body">
+                <!-- verse content injected here -->
+            </div>
+            <div class="actions">
+                <a id="modal-link" class="btn" href="#" target="_blank" rel="noopener">Open on
+                    ChurchofJesusChrist.org</a>
+                <button class="btn primary" id="modal-close" type="button">Close</button>
+            </div>
+        </article>
+    </div>
+
+    <script>
+        // Verse texts and links
+        const VERSES = {
+            'dc88-63': {
+                title: 'D&C 88:63',
+                text: '“Draw near unto me and I will draw near unto you; seek me diligently and ye shall find me; ask, and ye shall receive; knock, and it shall be opened unto you.”',
+                url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/88?id=p63&lang=eng#p63'
+            },
+            'dc88-67': {
+                title: 'D&C 88:67',
+                text: '“And if your eye be single to my glory, your whole bodies shall be filled with light; and there shall be no darkness in you; and that body which is filled with light comprehendeth all things.”',
+                url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/88?id=p67&lang=eng#p67'
+            },
+            'dc88-118': {
+                title: 'D&C 88:118',
+                text: '“And as all have not faith, seek ye diligently and teach one another words of wisdom; yea, seek ye out of the best books words of wisdom; seek learning, even by study and also by faith.”',
+                url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/88?id=p118&lang=eng#p118'
+            },
+            'dc88-119': {
+                title: 'D&C 88:119',
+                text: '“Organize yourselves; prepare every needful thing; and establish a house, even a house of prayer, a house of fasting, a house of faith, a house of learning, a house of glory, a house of order, a house of God.”',
+                url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/88?id=p119&lang=eng#p119'
+            }
+        };
+
+        const root = document.getElementById('modal-root');
+        const titleEl = document.getElementById('modal-title');
+        const bodyEl = document.getElementById('modal-body');
+        const linkEl = document.getElementById('modal-link');
+        const closeBtn = document.getElementById('modal-close');
+        let lastFocus = null;
+
+        function openModal(key) {
+            const v = VERSES[key];
+            if (!v) return;
+            lastFocus = document.activeElement;
+            titleEl.textContent = v.title;
+            bodyEl.textContent = v.text;
+            linkEl.href = v.url;
+            root.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            closeBtn.focus();
+        }
+        function closeModal() {
+            root.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            if (lastFocus) lastFocus.focus();
+        }
+
+        // Click handlers for verse chips
+        document.querySelectorAll('a.verse').forEach(a => {
+            a.addEventListener('click', (e) => {
+                // Allow Cmd/Ctrl click to open the official site
+                if (e.metaKey || e.ctrlKey) return;
+                e.preventDefault();
+                const key = a.getAttribute('data-modal');
+                openModal(key);
+            });
+        });
+
+        // Close interactions
+        root.addEventListener('click', (e) => { if (e.target === root) closeModal(); });
+        closeBtn.addEventListener('click', closeModal);
+        window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    </script>
+</body>
+
+</html>
