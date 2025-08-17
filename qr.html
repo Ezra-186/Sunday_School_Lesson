@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>QR Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body {
+        font-family: system-ui, Arial, sans-serif;
+        max-width: 640px;
+        margin: 2rem auto;
+        padding: 1rem;
+    }
+
+    label,
+    input,
+    button {
+        font-size: 1rem;
+    }
+
+    #qr {
+        margin-top: 1rem;
+    }
+
+    .row {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: .5rem;
+        align-items: center;
+    }
+</style>
+
+<div>
+    <h1>Create a QR Code</h1>
+    <div class="row">
+        <label for="url">URL</label>
+        <input id="url" placeholder="https://yourdomain.com/..." size="40">
+        <button id="make">Generate</button>
+    </div>
+
+    <div class="row" style="margin-top:.5rem">
+        <label for="size">Size</label>
+        <input id="size" type="number" value="256" min="128" step="64">
+        <button id="download">Download PNG</button>
+    </div>
+
+    <!-- IMPORTANT: use a DIV as the target container -->
+    <div id="qr" aria-live="polite"></div>
+</div>
+
+<!-- Load the real library; must be before our code -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+<script>
+    const urlInput = document.getElementById('url');
+    const sizeInput = document.getElementById('size');
+    const makeBtn = document.getElementById('make');
+    const dlBtn = document.getElementById('download');
+    const qrContainer = document.getElementById('qr');
+
+    let qrInstance = null;
+
+    function renderQR() {
+        const text = urlInput.value.trim();
+        const size = Math.max(128, Number(sizeInput.value) || 256);
+        if (!text) { qrContainer.innerHTML = ''; qrInstance = null; return; }
+
+        // Clear old QR
+        qrContainer.innerHTML = '';
+        qrInstance = new QRCode(qrContainer, {
+            text,
+            width: size,
+            height: size,
+            correctLevel: QRCode.CorrectLevel.M
+        });
+    }
+
+    function downloadPNG() {
+        if (!qrInstance) return;
+        // qrcodejs renders an <img> or <canvas> inside the container
+        const img = qrContainer.querySelector('img');
+        const canvas = qrContainer.querySelector('canvas');
+
+        let dataURL = '';
+        if (canvas) dataURL = canvas.toDataURL('image/png');
+        else if (img && img.src) dataURL = img.src;
+        else return;
+
+        const a = document.createElement('a');
+        a.href = dataURL;
+        a.download = 'qr.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    }
+
+    makeBtn.addEventListener('click', renderQR);
+    dlBtn.addEventListener('click', downloadPNG);
+</script>

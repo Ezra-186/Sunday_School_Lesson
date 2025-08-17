@@ -1,0 +1,420 @@
+/* =========================================
+   Mobile-first burgundy theme (single column)
+   ========================================= */
+
+:root {
+    --bg: #1c0b12;
+    /* page background */
+    --bg-2: #240e18;
+    /* subtle gradient stop */
+    --fg: #f7eef2;
+    /* near-white text */
+    --muted: #e2c6cf;
+    /* soft rose */
+
+    --card: #2b121a;
+    /* lighter burgundy cards */
+    --card-2: #351721;
+    --card-border: rgba(255, 255, 255, 0.06);
+
+    --radius: 18px;
+    --shadow: 0 10px 28px rgba(0, 0, 0, .35);
+    --accent: #f3a6b7;
+    /* blush accent */
+    --ring: rgba(243, 166, 183, .45);
+}
+
+/* Base layout */
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    -webkit-text-size-adjust: 100%;
+    font-family: "Roboto", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    background:
+        radial-gradient(900px 500px at 50% -10%, var(--bg-2), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
+    color: var(--fg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-size: 17px;
+    line-height: 1.55;
+}
+
+main {
+    flex: 1;
+}
+
+header {
+    padding: 1.75rem 1rem 1rem;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-family: "DM Serif Text", "Merriweather", Georgia, serif;
+    /* bigger title */
+    font-size: clamp(1.6rem, 6.5vw, 2.2rem);
+    font-weight: 400;
+    letter-spacing: .2px;
+}
+
+h1,
+h2 {
+    font-family: "Merriweather", "DM Serif Text", Georgia, serif;
+}
+
+header p {
+    margin: .45rem auto 0;
+    color: var(--muted);
+    max-width: 36ch;
+}
+
+.wrap {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: .5rem 1rem 1.2rem;
+}
+
+/* Single column cards for mobile */
+.grid {
+    display: grid;
+    gap: .9rem;
+    grid-template-columns: 1fr;
+}
+
+section.card {
+    background: linear-gradient(180deg, var(--card), var(--card-2));
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: .9rem .95rem 1rem;
+    border: 1px solid var(--card-border);
+    text-align: center;
+    /* center content in each card */
+}
+
+h2 {
+    margin: .1rem 0 .55rem;
+    font-size: 1.08rem;
+    letter-spacing: .2px;
+}
+
+ul {
+    margin: .35rem 0 0 0;
+    padding: 0;
+    list-style-position: inside;
+}
+
+li {
+    margin: .4rem 0;
+}
+
+.note {
+    color: var(--muted);
+    font-size: .94rem;
+    text-align: center;
+}
+
+/* Images — optimized for phones */
+.section-img {
+    width: 100%;
+    aspect-ratio: 8 / 5;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    margin: 0 0 .7rem;
+    background: #4a1f2a;
+    border: 1px solid var(--card-border);
+}
+
+/* Scripture chips — larger tap targets */
+a.verse {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .42rem;
+    padding: .32rem .8rem;
+    min-height: 44px;
+    border-radius: 999px;
+    font-weight: 760;
+    line-height: 1.15;
+    background: rgba(243, 166, 183, .16);
+    border: 1px solid rgba(243, 166, 183, .45);
+    color: var(--fg);
+    box-shadow: inset 0 -1px 0 rgba(243, 166, 183, .18);
+    transition: transform .12s ease, background-color .12s ease, border-color .12s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    a.verse:hover {
+        transform: translateY(-1px);
+        background: rgba(243, 166, 183, .22);
+        border-color: rgba(243, 166, 183, .6);
+    }
+}
+
+a.verse:focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
+}
+
+a.verse svg {
+    width: 15px;
+    height: 15px;
+    opacity: .8;
+}
+
+/* Q&A form inputs */
+.qa-form {
+    display: grid;
+    gap: .6rem;
+    justify-items: center;
+}
+
+.input,
+.textarea {
+    width: 100%;
+    max-width: 28rem;
+    padding: .8rem;
+    border-radius: 14px;
+    border: 1px solid var(--card-border);
+    background: #3b1720;
+    color: var(--fg);
+}
+
+.textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.check {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    opacity: .9;
+}
+
+.honeypot {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+}
+
+/* Buttons */
+.btn {
+    font: inherit;
+    border-radius: 999px;
+    padding: .62rem .95rem;
+    border: 1px solid var(--card-border);
+    text-decoration: none;
+    background: #3b1720;
+    color: var(--fg);
+    cursor: pointer;
+}
+
+.btn.primary {
+    background: var(--accent);
+    color: #1a0b10;
+    border-color: transparent;
+    box-shadow: 0 10px 22px rgba(243, 166, 183, .28);
+    font-weight: 700;
+}
+
+/* Quote + lists for new sections */
+.quote {
+    margin: .5rem 0;
+    padding: .6rem .8rem;
+    border-left: 3px solid rgba(255, 255, 255, .25);
+    opacity: .95;
+}
+
+.inline {
+    list-style: none;
+    padding: 0;
+    margin: .5rem 0 0;
+    display: grid;
+    gap: .25rem;
+}
+
+.scripture-list {
+    line-height: 1.6;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1.4rem 1rem 1.6rem;
+    color: var(--muted);
+    font-size: .95rem;
+}
+
+/* Modal — cohesive with burgundy */
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 10, 14, .6);
+    backdrop-filter: blur(6px);
+    display: none;
+    place-items: center;
+    z-index: 50;
+}
+
+.backdrop[aria-hidden="false"] {
+    display: grid;
+}
+
+.modal {
+    background: linear-gradient(180deg, var(--card), var(--card-2));
+    color: var(--fg);
+    width: min(640px, 92vw);
+    border-radius: 18px;
+    box-shadow: 0 28px 60px rgba(0, 0, 0, .45);
+    border: 1px solid var(--card-border);
+}
+
+.modal header {
+    padding: .8rem 1rem;
+    border-bottom: 1px solid var(--card-border);
+    text-align: left;
+}
+
+.modal header h3 {
+    margin: 0;
+    font-size: 1.02rem;
+}
+
+.modal .content {
+    padding: .85rem 1rem;
+    font-size: 1rem;
+}
+
+.modal .actions {
+    display: flex;
+    gap: .6rem;
+    justify-content: space-between;
+    align-items: center;
+    padding: .75rem 1rem 1rem;
+    border-top: 1px solid var(--card-border);
+}
+
+/* Small screen fine-tuning */
+@media (max-width: 360px) {
+    body {
+        font-size: 16px;
+    }
+
+    header h1 {
+        font-size: 1.45rem;
+    }
+}
+
+@media (min-width: 480px) {
+    body {
+        font-size: 18px;
+    }
+
+    h2 {
+        font-size: 1.12rem;
+    }
+}
+
+@media (min-width: 640px) {
+    body {
+        font-size: 19px;
+    }
+
+    .wrap {
+        padding: 1rem 1.5rem 1.5rem;
+    }
+}
+
+/* Print */
+@media print {
+    body {
+        background: #fff;
+        color: #000;
+    }
+
+    header {
+        background: none;
+        padding-bottom: .6rem;
+    }
+
+    section.card {
+        box-shadow: none;
+        background: #fff;
+        color: #000;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .section-img,
+    a.verse svg {
+        display: none;
+    }
+
+    ul {
+        list-style-position: outside;
+        margin-left: 1rem;
+    }
+
+    a.verse {
+        text-decoration: underline;
+        background: transparent;
+        border: none;
+        padding: 0;
+        font-weight: 700;
+        color: #000;
+    }
+
+    .backdrop {
+        display: none !important;
+    }
+
+    footer {
+        color: #444;
+    }
+}
+
+/* Nicer links for the All lesson scriptures list */
+.scripture-list a {
+    color: var(--fg);
+    /* match theme text color */
+    text-decoration: none;
+    /* remove default underline */
+    border-bottom: 1px solid rgba(243, 166, 183, .35);
+    /* subtle accent underline */
+    padding-bottom: 1px;
+    transition: border-color .15s ease, color .15s ease, background-color .15s ease;
+}
+
+.scripture-list a:visited {
+    color: var(--fg);
+    /* avoid purple visited color */
+}
+
+@media (hover:hover) and (pointer:fine) {
+    .scripture-list a:hover {
+        border-bottom-color: rgba(243, 166, 183, .8);
+        background: rgba(243, 166, 183, .10);
+        border-radius: 4px;
+    }
+}
+
+.scripture-list a:focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
+    border-bottom-color: transparent;
+}
+
+/* Small “external” hint */
+.scripture-list a::after {
+    content: "↗";
+    font-size: .85em;
+    opacity: .7;
+    margin-left: .35rem;
+}
