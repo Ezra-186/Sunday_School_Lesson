@@ -300,6 +300,9 @@ footer {
     padding: .75rem 1rem 1rem;
     border-top: 1px solid var(--card-border);
 }
+.btn {
+    white-space: nowrap;
+}
 
 /* Small screen fine-tuning */
 @media (max-width: 360px) {

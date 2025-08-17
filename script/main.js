@@ -71,8 +71,8 @@ window.addEventListener('keydown', (e) => {
 
 // ------------- Supabase config -------------
 // Make sure the Supabase CDN <script> is loaded BEFORE this file.
-const SUPABASE_URL = "https://ekcrhlfhqebtqytkhfkq.supabase.co"; // ← your project URL
-const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVrY3JobGZocWVidHF5dGtoZmtxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzODM4MzYsImV4cCI6MjA3MDk1OTgzNn0.JCFxQXvRoZRs2H2R0Uwn8Buz2madkqwaYq8g5uZ_JqM"; // ← your anon public key
+const SUPABASE_URL = "https://ekcrhlfhqebtqytkhfkq.supabase.co"; // your project URL
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVrY3JobGZocWVidHF5dGtoZmtxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzODM4MzYsImV4cCI6MjA3MDk1OTgzNn0.JCFxQXvRoZRs2H2R0Uwn8Buz2madkqwaYq8g5uZ_JqM"; // anon public key
 
 let sb = null;
 if (window.supabase) {
@@ -111,7 +111,7 @@ if (window.supabase) {
         } else {
             msg.textContent = "✅ Sent! I’ve got it.";
             form.reset();
-            if (anon) anon.checked = false; // default back to anonymous
+            if (anon) anon.checked = false; // leave default as NOT anonymous
         }
     });
 })();
@@ -124,10 +124,10 @@ if (window.supabase) {
 
     // Insert controls above the list
     const controls = document.createElement("div");
-    controls.style = "display:flex;gap:.5rem;justify-content:space-between;align-items:center;margin:.5rem 0 1rem;";
+    controls.style = "display:flex;gap:.5rem;justify-content:space-between;align-items:center;margin:.5rem 0 1rem;flex-wrap:wrap;";
     controls.innerHTML = `
-    <div class="note">Sign in.</div>
-    <div style="display:flex;gap:.5rem">
+    <div class="note">This page is private to you.</div>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:flex-end">
       <button id="signin"  class="btn primary">Sign in</button>
       <button id="signout" class="btn" style="display:none">Sign out</button>
       <button id="clearAll" class="btn" style="display:none">🗑️ Clear all</button>
@@ -146,28 +146,93 @@ if (window.supabase) {
         clearBtn.style.display = ui ? "" : "none";
     }
 
-    // Sign-in with magic link
-    async function signIn() {
-        const email = prompt("Enter your email and I’ll send a secure sign-in link:");
-        if (!email) return;
-        const { error } = await sb.auth.signInWithOtp({
-            email,
-            options: { emailRedirectTo: window.location.href }
+    // Inline OTP (email + 6-digit code) UI
+    function renderOtpUI(container, onVerify) {
+        if (container.querySelector("#otpBox")) return; // already rendered
+        const box = document.createElement("div");
+        box.id = "otpBox";
+        box.style = "display:grid;gap:.4rem;justify-items:center;margin-top:.5rem";
+        box.innerHTML = `
+      <input id="otpEmail" type="email" placeholder="your@email.com"
+             style="width:100%;max-width:22rem;padding:.6rem;border-radius:10px;border:1px solid var(--card-border);background:#3b1720;color:var(--fg)">
+      <div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;justify-content:center">
+        <button id="sendLink" class="btn primary">Send sign-in link</button>
+        <span class="note" style="opacity:.9">or paste 6-digit code:</span>
+        <input id="otpCode" inputmode="numeric" pattern="[0-9]*" maxlength="6"
+               style="width:7rem;text-align:center;padding:.6rem;border-radius:10px;border:1px solid var(--card-border);background:#3b1720;color:var(--fg)">
+        <button id="verifyCode" class="btn">Verify code</button>
+      </div>
+      <div id="otpMsg" class="note"></div>
+    `;
+        container.appendChild(box);
+
+        const emailEl = box.querySelector("#otpEmail");
+        const codeEl = box.querySelector("#otpCode");
+        const msgEl = box.querySelector("#otpMsg");
+
+        // send magic link
+        box.querySelector("#sendLink").addEventListener("click", async () => {
+            const email = emailEl.value.trim();
+            if (!email) { msgEl.textContent = "Enter your email first."; return; }
+            msgEl.textContent = "Sending link…";
+            const { error } = await sb.auth.signInWithOtp({
+                email,
+                options: { emailRedirectTo: window.location.href }
+            });
+            msgEl.textContent = error
+                ? "Couldn’t send. Check your Auth URL settings."
+                : "Link sent! If it doesn’t open, copy the 6-digit code from the email and paste it below.";
         });
-        if (error) alert("Could not send link. Check your email/redirect settings.");
-        else alert("Check your email for the sign-in link, then come back to this page.");
+
+        // verify 6-digit code
+        box.querySelector("#verifyCode").addEventListener("click", async () => {
+            const email = emailEl.value.trim();
+            const token = codeEl.value.trim();
+            if (!email || token.length !== 6) { msgEl.textContent = "Enter your email and 6-digit code."; return; }
+            msgEl.textContent = "Verifying…";
+            const { error } = await sb.auth.verifyOtp({ email, token, type: "email" });
+            if (error) {
+                msgEl.textContent = "Invalid/expired code. Send a new one.";
+            } else {
+                msgEl.textContent = "Signed in!";
+                onVerify?.();
+            }
+        });
+    }
+
+    // Sign-in action: render the OTP UI inline and hide the extra button
+    async function signIn() {
+        renderOtpUI(controls, () => {
+            setAuthed(true);
+            if (location.hash.includes("access_token")) {
+                const clean = location.pathname + location.search;
+                history.replaceState(null, "", clean);
+            }
+            loadBoard();
+        });
+        if (signInBtn) signInBtn.style.display = "none";
     }
 
     async function signOut() {
         await sb.auth.signOut();
         setAuthed(false);
         list.innerHTML = "<p class='note' style='text-align:center'>Signed out.</p>";
+        // Show OTP UI so you can sign back in immediately; keep the button hidden
+        renderOtpUI(controls, () => {
+            setAuthed(true);
+            if (location.hash.includes("access_token")) {
+                const clean = location.pathname + location.search;
+                history.replaceState(null, "", clean);
+            }
+            loadBoard();
+        });
+        if (signInBtn) signInBtn.style.display = "none";
     }
 
     signInBtn.addEventListener("click", signIn);
     signOutBtn.addEventListener("click", signOut);
 
-    // Delete ALL questions
+    // Delete ALL questions (careful!)
     clearBtn.addEventListener("click", async () => {
         if (!confirm("Delete ALL questions? This cannot be undone.")) return;
 
@@ -180,7 +245,7 @@ if (window.supabase) {
         if (error) {
             alert("Could not clear questions.");
         } else {
-            await load(); 
+            await loadBoard();
         }
     });
 
@@ -216,8 +281,14 @@ if (window.supabase) {
     // Load + realtime
     async function loadBoard() {
         list.innerHTML = "<p class='note' style='text-align:center'>Loading…</p>";
-        const { data, error } = await sb.from("questions").select("*").order("created_at", { ascending: false }).limit(200);
+        const { data, error } = await sb
+            .from("questions")
+            .select("*")
+            .order("created_at", { ascending: false })
+            .limit(200);
+
         if (error) { list.innerHTML = "<p style='text-align:center'>Couldn't load.</p>"; return; }
+
         list.innerHTML = data.map(card).join("");
 
         // Subscribe to new inserts
@@ -227,19 +298,39 @@ if (window.supabase) {
             .subscribe();
     }
 
-    // Check session → if none, wait for sign-in; if yes, show board
+    // Check session → if none, show OTP UI; if yes, show board
     (async function () {
         const { data: { session } } = await sb.auth.getSession();
         if (session) {
             setAuthed(true);
+            if (location.hash.includes("access_token")) {
+                const clean = location.pathname + location.search;
+                history.replaceState(null, "", clean);
+            }
             loadBoard();
         } else {
             setAuthed(false);
             list.innerHTML = "<p class='note' style='text-align:center'>Not signed in. Click “Sign in” above to view/manage questions.</p>";
-            // if the page just returned from the magic link, Supabase will finalize the session automatically
+
+            // Render OTP UI immediately and hide the button
+            renderOtpUI(controls, () => {
+                setAuthed(true);
+                if (location.hash.includes("access_token")) {
+                    const clean = location.pathname + location.search;
+                    history.replaceState(null, "", clean);
+                }
+                loadBoard();
+            });
+            if (signInBtn) signInBtn.style.display = "none";
+
+            // If the page returns from the magic link, finalize session and load
             sb.auth.onAuthStateChange((_evt, sess) => {
                 if (sess) {
                     setAuthed(true);
+                    if (location.hash.includes("access_token")) {
+                        const clean = location.pathname + location.search;
+                        history.replaceState(null, "", clean);
+                    }
                     loadBoard();
                 }
             });
