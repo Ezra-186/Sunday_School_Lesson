@@ -53,7 +53,7 @@ function closeModal() {
     if (lastFocus) lastFocus.focus();
 }
 
-// Verse chip clicks (safe even if none exist)
+// Verse chip clicks
 document.querySelectorAll('a.verse').forEach(a => {
     a.addEventListener('click', (e) => {
         if (e.metaKey || e.ctrlKey) return; // allow open in new tab
@@ -62,7 +62,7 @@ document.querySelectorAll('a.verse').forEach(a => {
     });
 });
 
-// Close interactions (guard for pages without modal)
+// Close interactions
 if (root) root.addEventListener('click', (e) => { if (e.target === root) closeModal(); });
 if (closeBtn) closeBtn.addEventListener('click', closeModal);
 window.addEventListener('keydown', (e) => {
@@ -70,7 +70,6 @@ window.addEventListener('keydown', (e) => {
 });
 
 // ------------- Supabase config -------------
-// Make sure the Supabase CDN <script> is loaded BEFORE this file.
 const SUPABASE_URL = "https://ekcrhlfhqebtqytkhfkq.supabase.co"; // your project URL
 const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVrY3JobGZocWVidHF5dGtoZmtxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzODM4MzYsImV4cCI6MjA3MDk1OTgzNn0.JCFxQXvRoZRs2H2R0Uwn8Buz2madkqwaYq8g5uZ_JqM"; // anon public key
 
@@ -122,45 +121,64 @@ if (window.supabase) {
     const list = document.getElementById("list");
     if (!list) return; // not on qa.html
 
+    // Compute an explicit redirect that matches your whitelisted URLs
+    const AUTH_REDIRECT =
+        (location.hostname === "localhost" || location.hostname === "127.0.0.1")
+            ? `${location.protocol}//${location.host}/qa.html`
+            : window.location.href;
+
     // Insert controls above the list
     const controls = document.createElement("div");
     controls.style = "display:flex;gap:.5rem;justify-content:space-between;align-items:center;margin:.5rem 0 1rem;flex-wrap:wrap;";
     controls.innerHTML = `
     <div class="note">This page is private to you.</div>
     <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:flex-end">
-      <button id="signin"  class="btn primary">Sign in</button>
-      <button id="signout" class="btn" style="display:none">Sign out</button>
-      <button id="clearAll" class="btn" style="display:none">🗑️ Clear all</button>
+      <button id="signin"        class="btn primary">Sign in</button>
+      <button id="signinGoogle"  class="btn">Sign in with Google</button>
+      <button id="signout"       class="btn" style="display:none">Sign out</button>
+      <button id="clearAll"      class="btn" style="display:none">🗑️ Clear all</button>
     </div>
   `;
     list.insertAdjacentElement("beforebegin", controls);
 
     const signInBtn = controls.querySelector("#signin");
+    const googleBtn = controls.querySelector("#signinGoogle");
     const signOutBtn = controls.querySelector("#signout");
     const clearBtn = controls.querySelector("#clearAll");
 
     // helper: show/hide admin controls
     function setAuthed(ui) {
         signInBtn.style.display = ui ? "none" : "";
+        googleBtn.style.display = ui ? "none" : "";
         signOutBtn.style.display = ui ? "" : "none";
         clearBtn.style.display = ui ? "" : "none";
     }
 
-    // Inline OTP (email + 6-digit code) UI
+    // Helper: clean magic-link fragment
+    function cleanFragment() {
+        if (location.hash.includes("access_token")) {
+            const clean = location.pathname + location.search;
+            history.replaceState(null, "", clean);
+        }
+    }
+
+    // Build Email OTP UI (magic link + 6-digit code) with cooldown
     function renderOtpUI(container, onVerify) {
         if (container.querySelector("#otpBox")) return; // already rendered
         const box = document.createElement("div");
         box.id = "otpBox";
-        box.style = "display:grid;gap:.4rem;justify-items:center;margin-top:.5rem";
+        box.style = "display:grid;gap:.6rem;justify-items:center;margin-top:.5rem";
         box.innerHTML = `
-      <input id="otpEmail" type="email" placeholder="your@email.com"
-             style="width:100%;max-width:22rem;padding:.6rem;border-radius:10px;border:1px solid var(--card-border);background:#3b1720;color:var(--fg)">
-      <div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;justify-content:center">
-        <button id="sendLink" class="btn primary">Send sign-in link</button>
-        <span class="note" style="opacity:.9">or paste 6-digit code:</span>
-        <input id="otpCode" inputmode="numeric" pattern="[0-9]*" maxlength="6"
-               style="width:7rem;text-align:center;padding:.6rem;border-radius:10px;border:1px solid var(--card-border);background:#3b1720;color:var(--fg)">
-        <button id="verifyCode" class="btn">Verify code</button>
+      <div id="emailPane" style="display:grid;gap:.4rem;justify-items:center;width:100%;">
+        <input id="otpEmail" type="email" placeholder="you@example.com"
+               style="width:100%;max-width:22rem;padding:.6rem;border-radius:10px;border:1px solid var(--card-border);background:#3b1720;color:var(--fg)">
+        <div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;justify-content:center">
+          <button id="sendLink" class="btn primary">Send sign-in link</button>
+          <span class="note" style="opacity:.9">or paste 6-digit code:</span>
+          <input id="otpCode" inputmode="numeric" pattern="[0-9]*" maxlength="6"
+                 style="width:7rem;text-align:center;padding:.6rem;border-radius:10px;border:1px solid var(--card-border);background:#3b1720;color:var(--fg)">
+          <button id="verifyCode" class="btn">Verify code</button>
+        </div>
       </div>
       <div id="otpMsg" class="note"></div>
     `;
@@ -169,48 +187,85 @@ if (window.supabase) {
         const emailEl = box.querySelector("#otpEmail");
         const codeEl = box.querySelector("#otpCode");
         const msgEl = box.querySelector("#otpMsg");
+        const sendBtn = box.querySelector("#sendLink");
+
+        // Cooldown UI helper (to avoid 2/hr cap while testing)
+        function startCooldown(seconds) {
+            const total = seconds;
+            sendBtn.disabled = true;
+            let t = seconds;
+            sendBtn.textContent = `Resend (${t}s)`;
+            const tick = setInterval(() => {
+                t -= 1;
+                if (t <= 0) {
+                    clearInterval(tick);
+                    sendBtn.disabled = false;
+                    sendBtn.textContent = "Send sign-in link";
+                } else {
+                    sendBtn.textContent = `Resend (${t}s)`;
+                }
+            }, 1000);
+        }
 
         // send magic link
-        box.querySelector("#sendLink").addEventListener("click", async () => {
-            const email = emailEl.value.trim();
+        sendBtn.addEventListener("click", async () => {
+            const email = (emailEl.value || "").trim();
             if (!email) { msgEl.textContent = "Enter your email first."; return; }
             msgEl.textContent = "Sending link…";
             const { error } = await sb.auth.signInWithOtp({
                 email,
-                options: { emailRedirectTo: window.location.href }
+                options: { emailRedirectTo: AUTH_REDIRECT }
             });
-            msgEl.textContent = error
-                ? "Couldn’t send. Check your Auth URL settings."
-                : "Link sent! If it doesn’t open, copy the 6-digit code from the email and paste it below.";
+            if (error) {
+                console.error("signInWithOtp(email) error:", error);
+                msgEl.textContent = error.message || "Couldn’t send. Check Auth URL settings and rate limits.";
+            } else {
+                msgEl.textContent = "Link sent! If it doesn’t open, paste the 6-digit code from the email below.";
+                startCooldown(60); // 60s cooldown to avoid rate limit
+            }
         });
 
         // verify 6-digit code
         box.querySelector("#verifyCode").addEventListener("click", async () => {
-            const email = emailEl.value.trim();
-            const token = codeEl.value.trim();
+            const email = (emailEl.value || "").trim();
+            const token = (codeEl.value || "").trim();
             if (!email || token.length !== 6) { msgEl.textContent = "Enter your email and 6-digit code."; return; }
             msgEl.textContent = "Verifying…";
             const { error } = await sb.auth.verifyOtp({ email, token, type: "email" });
             if (error) {
+                console.error("verifyOtp(email) error:", error);
                 msgEl.textContent = "Invalid/expired code. Send a new one.";
             } else {
                 msgEl.textContent = "Signed in!";
+                cleanFragment();
                 onVerify?.();
             }
         });
     }
 
-    // Sign-in action: render the OTP UI inline and hide the extra button
+    // Sign-in action (email)
     async function signIn() {
         renderOtpUI(controls, () => {
             setAuthed(true);
-            if (location.hash.includes("access_token")) {
-                const clean = location.pathname + location.search;
-                history.replaceState(null, "", clean);
-            }
+            cleanFragment();
             loadBoard();
         });
         if (signInBtn) signInBtn.style.display = "none";
+    }
+
+    // Optional: Google OAuth (no emails, no rate limit)
+    if (googleBtn) {
+        googleBtn.addEventListener("click", async () => {
+            try {
+                await sb.auth.signInWithOAuth({
+                    provider: "google",
+                    options: { redirectTo: AUTH_REDIRECT }
+                });
+                // Redirect happens; on return, session will be set and board loads
+            } catch (err) {
+                console.error("Google OAuth error:", err);
+            }
+        });
     }
 
     async function signOut() {
@@ -220,10 +275,7 @@ if (window.supabase) {
         // Show OTP UI so you can sign back in immediately; keep the button hidden
         renderOtpUI(controls, () => {
             setAuthed(true);
-            if (location.hash.includes("access_token")) {
-                const clean = location.pathname + location.search;
-                history.replaceState(null, "", clean);
-            }
+            cleanFragment();
             loadBoard();
         });
         if (signInBtn) signInBtn.style.display = "none";
@@ -235,18 +287,9 @@ if (window.supabase) {
     // Delete ALL questions (careful!)
     clearBtn.addEventListener("click", async () => {
         if (!confirm("Delete ALL questions? This cannot be undone.")) return;
-
-        // Use IS NOT NULL instead of != NULL
-        const { error } = await sb
-            .from("questions")
-            .delete()
-            .not("id", "is", null);
-
-        if (error) {
-            alert("Could not clear questions.");
-        } else {
-            await loadBoard();
-        }
+        const { error } = await sb.from("questions").delete().not("id", "is", null);
+        if (error) alert("Could not clear questions.");
+        else await loadBoard();
     });
 
     // Render a question card
@@ -286,51 +329,36 @@ if (window.supabase) {
             .select("*")
             .order("created_at", { ascending: false })
             .limit(200);
-
         if (error) { list.innerHTML = "<p style='text-align:center'>Couldn't load.</p>"; return; }
-
         list.innerHTML = data.map(card).join("");
 
-        // Subscribe to new inserts
         sb.channel("public:questions")
             .on("postgres_changes", { event: "INSERT", schema: "public", table: "questions" },
                 payload => list.insertAdjacentHTML("afterbegin", card(payload.new)))
             .subscribe();
     }
 
-    // Check session → if none, show OTP UI; if yes, show board
+    // Session check
     (async function () {
         const { data: { session } } = await sb.auth.getSession();
         if (session) {
             setAuthed(true);
-            if (location.hash.includes("access_token")) {
-                const clean = location.pathname + location.search;
-                history.replaceState(null, "", clean);
-            }
+            cleanFragment();
             loadBoard();
         } else {
             setAuthed(false);
-            list.innerHTML = "<p class='note' style='text-align:center'>Not signed in. Click “Sign in” above to view/manage questions.</p>";
-
-            // Render OTP UI immediately and hide the button
+            list.innerHTML = "<p class='note' style='text-align:center'>Not signed in. Use Email below to view/manage questions.</p>";
             renderOtpUI(controls, () => {
                 setAuthed(true);
-                if (location.hash.includes("access_token")) {
-                    const clean = location.pathname + location.search;
-                    history.replaceState(null, "", clean);
-                }
+                cleanFragment();
                 loadBoard();
             });
             if (signInBtn) signInBtn.style.display = "none";
 
-            // If the page returns from the magic link, finalize session and load
             sb.auth.onAuthStateChange((_evt, sess) => {
                 if (sess) {
                     setAuthed(true);
-                    if (location.hash.includes("access_token")) {
-                        const clean = location.pathname + location.search;
-                        history.replaceState(null, "", clean);
-                    }
+                    cleanFragment();
                     loadBoard();
                 }
             });
