@@ -4,25 +4,20 @@
 
 // ------------- Verse data -------------
 const VERSES = {
-    'dc88-63': {
-        title: 'D&C 88:63',
-        text: '“Draw near unto me and I will draw near unto you; seek me diligently and ye shall find me; ask, and ye shall receive; knock, and it shall be opened unto you.”',
-        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/88?id=p63&lang=eng#p63'
+    'dc103-12': {
+        title: 'D&C 103:12',
+        text: 'For after much tribulation, as I have said unto you in a former commandment, cometh the blessing.',
+        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/103?lang=eng&id=p12#p12'
     },
-    'dc88-67': {
-        title: 'D&C 88:67',
-        text: '“And if your eye be single to my glory, your whole bodies shall be filled with light; and there shall be no darkness in you; and that body which is filled with light comprehendeth all things.”',
-        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/88?id=p67&lang=eng#p67'
+    'dc103-15': {
+        title: 'D&C 103:15',
+        text: 'Behold, I say unto you, the redemption of Zion must needs come by power;',
+        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/103?lang=eng&id=p15#p15'
     },
-    'dc88-118': {
-        title: 'D&C 88:118',
-        text: '“And as all have not faith, seek ye diligently and teach one another words of wisdom; yea, seek ye out of the best books words of wisdom; seek learning, even by study and also by faith.”',
-        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/88?id=p118&lang=eng#p118'
-    },
-    'dc88-119': {
-        title: 'D&C 88:119',
-        text: '“Organize yourselves; prepare every needful thing; and establish a house, even a house of prayer, a house of fasting, a house of faith, a house of learning, a house of glory, a house of order, a house of God.”',
-        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/88?id=p119&lang=eng#p119'
+    'dc104-17': {
+        title: 'D&C 104:17',
+        text: '“For the earth is full, and there is enough and to spare.”',
+        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/104?lang=eng&id=p17#p17'
     }
 };
 
