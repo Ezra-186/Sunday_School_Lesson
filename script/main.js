@@ -4,20 +4,20 @@
 
 // ------------- Verse data -------------
 const VERSES = {
-    'dc103-12': {
-        title: 'D&C 103:12',
-        text: 'For after much tribulation, as I have said unto you in a former commandment, cometh the blessing.',
-        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/103?lang=eng&id=p12#p12'
+    'dc115-5-6': {
+        title: 'D&C 115:5–6',
+        text: 'Arise and shine forth, that thy light may be a standard for the nations ... for a defense, and for a refuge from the storm.',
+        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/115?lang=eng&id=p5-p6#p5'
     },
-    'dc103-15': {
-        title: 'D&C 103:15',
-        text: 'Behold, I say unto you, the redemption of Zion must needs come by power;',
-        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/103?lang=eng&id=p15#p15'
+    'dc117-13': {
+        title: 'D&C 117:13',
+        text: 'His sacrifice shall be more sacred unto me than his increase.',
+        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/117?lang=eng&id=p13#p13'
     },
-    'dc104-17': {
-        title: 'D&C 104:17',
-        text: '“For the earth is full, and there is enough and to spare.”',
-        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/104?lang=eng&id=p17#p17'
+    'dc119-4': {
+        title: 'D&C 119:4',
+        text: 'This shall be a standing law ... after that, those who have thus been tithed shall pay one-tenth of all their interest annually.',
+        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/119?lang=eng&id=p4#p4'
     }
 };
 
@@ -108,6 +108,58 @@ if (window.supabase) {
             if (anon) anon.checked = false; // leave default as NOT anonymous
         }
     });
+})();
+
+// ------------- Sticky nav + smooth anchor scrolling -------------
+(() => {
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  const NAV_OPEN_CLASS = 'nav-open';
+
+  if (!navToggle || !navMenu) return; // Safe no-op if nav isn't on this page
+
+  // Toggle mobile menu
+  navToggle.addEventListener('click', () => {
+    const open = document.body.classList.toggle(NAV_OPEN_CLASS);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  // Close menu and smooth-scroll to target on link click
+  navMenu.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const hash = a.getAttribute('href');
+      // Only handle in-page anchors like #history-h
+      if (hash && hash.length > 1) {
+        const id = hash.slice(1);
+        const target = document.getElementById(id);
+        if (target) {
+          e.preventDefault();
+          // Offset for sticky nav height
+          const nav = document.querySelector('.site-nav');
+          const navH = nav ? nav.offsetHeight : 0;
+          const top = target.getBoundingClientRect().top + window.scrollY - (navH + 8);
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      }
+      // Always close the mobile menu after navigation
+      document.body.classList.remove(NAV_OPEN_CLASS);
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Close on Escape for accessibility
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.body.classList.remove(NAV_OPEN_CLASS);
+      navToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Prevent a "stuck open" state on resize (e.g., rotating phone)
+  window.addEventListener('resize', () => {
+    document.body.classList.remove(NAV_OPEN_CLASS);
+    navToggle.setAttribute('aria-expanded', 'false');
+  });
 })();
 
 // ------------- Live board (qa.html; admin-only) -------------
@@ -359,4 +411,16 @@ if (window.supabase) {
             });
         }
     })();
+})();
+
+// Keep CSS --nav-h equal to the real nav height (for padding & menu positioning)
+(() => {
+    const nav = document.querySelector('.site-nav');
+    if (!nav) return;
+    const setH = () => {
+        document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+    };
+    setH();
+    window.addEventListener('load', setH);
+    window.addEventListener('resize', setH);
 })();

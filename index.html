@@ -5,9 +5,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#1c0b12" />
-    <title>Handout — “After Much Tribulation … Cometh the Blessing” (D&C 102–105)</title>
+    <title>Handout — “His Sacrifice Shall Be More Sacred unto Me Than His Increase” (D&C 115–120)</title>
     <meta name="description"
-        content="One-page handout for Doctrine and Covenants 102–105 — brief history (Zion’s Camp), exact scripture links, key verses, weekly practices, and a reflection prompt." />
+        content="One-page handout for Doctrine and Covenants 115–120 — brief history (Far West), exact scripture links, key verses, weekly practices, and a reflection prompt." />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,24 +15,47 @@
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Merriweather:wght@400;700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
+
     <!-- Styles -->
     <link rel="stylesheet" href="styles/main.css">
 </head>
 
-<body>
+<body id="top">
+    <!-- Sticky nav -->
+    <nav class="site-nav">
+        <div class="nav-inner">
+            <a href="#top" class="brand">Sunday School</a>
+            <button id="navToggle" class="hamburger" aria-expanded="false" aria-controls="navMenu"
+                aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="menu" id="navMenu">
+                <li><a href="#history">Lesson's 'History</a></li>
+                <li><a href="#lost">I'm Lost?</a></li>
+                <li><a href="#higlights">Lesson Highlights</a></li>
+                <li><a href="#tryme">Week's Challenge</a></li>
+                <li><a href="#qa-h">Ask a Live Questions</a></li>
+            </ul>
+        </div> <!-- 👈 add this -->
+    </nav>
     <header>
-        <h1>“After Much Tribulation … Cometh the Blessing”</h1>
-        <p>(D&amp;C 102–105)</p>
+        <h1>“His Sacrifice Shall Be More Sacred unto Me Than His Increase”</h1>
+        <p>(D&amp;C 115–120)</p>
         <br>
-        <h2>Sunday School</h2>
-        <h2>September 21st</h2>
+        <h2>October 19</h2>
+        <!-- Quick jump to Q&A
+        <p class="top-ask">
+            <a class="btn primary" href="#qa-h" aria-label="Jump to the Q&A form">
+                Ask an Questions Here
+            </a>
+        </p> -->
     </header>
 
     <main>
         <div class="wrap">
             <div class="grid">
                 <!-- SECTION: CHALLENGE CHECK-IN (last class) -->
-                <section class="card" aria-labelledby="challenge-h">
+                <!-- <section class="card" aria-labelledby="challenge-h">
                     <img class="section-img"
                         src="https://lovinglifeco.com/wp-content/uploads/2023/06/man-jumping-to-challenge-himself.jpg"
                         alt="Challenge check-in" />
@@ -50,87 +73,82 @@
                         <li>👋 Quick show of hands: who tried it?</li>
                         <li>🗣️ Share: what did you notice?</li>
                     </ul>
-                </section>
+                </section> -->
 
-                <!-- SECTION: VIDEO -->
+                <!-- SECTION: VIDEO (you can keep or swap the YouTube link) -->
                 <section class="card" aria-labelledby="video-h">
-                    <h2 id="video-h">Watch: Zion’s Camp (Video)</h2>
+                    <h2 id="video-h">Watch: The Church’s Name and Mission (Video)</h2>
 
-                    <!-- responsive 16:9 player -->
                     <div
                         style="position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden">
-                        <iframe src="https://www.youtube-nocookie.com/embed/4VdJb82JjrA"
-                            title="Zion’s Camp (YouTube video)"
+                        <iframe
+                            src="https://www.youtube-nocookie.com/embed/U5iNTsUg1-o?rel=0&modestbranding=1"
+                            title="The Church’s Name and Mission"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen loading="lazy"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen
+                            loading="lazy"
                             style="position:absolute;inset:0;width:100%;height:100%;border:0">
                         </iframe>
                     </div>
 
-                    <p class="note" style="text-align:center;margin-top:.5rem">
+                    <p class="note" style="text-align:center;margin-top:2.5rem">
                         If the player doesn’t load,
                         <a class="btn primary" target="_blank" rel="noopener"
-                            href="https://youtu.be/4VdJb82JjrA?si=-FMJz9AJvkqfA5S_">
-                            <svg viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em">
-                                <path fill="currentColor"
-                                    d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z" />
-                            </svg>
+                           href="https://www.youtube.com/watch?v=U5iNTsUg1-o">
                             Open on YouTube
                         </a>
                     </p>
                 </section>
 
                 <!-- SECTION: HISTORY -->
-                <section class="card" aria-labelledby="history-h">
+                <section class="card" aria-labelledby="history-h" id="history">
                     <img class="section-img"
-                        src="https://assets.churchofjesuschrist.org/fe/ee/feee4e6507474881ee221f6f6b83234606e9f70a/struggles_zions_camp.jpeg"
-                        alt="Zion’s Camp and Kirtland—context for D&amp;C 102–105" />
-                    <h2 id="history-h">What are D&amp;C 102–105? <br> Brief History</h2>
+                        src="https://www.churchofjesuschrist.org/imgs/e1247f630fca11ee9676eeeeac1edafa336c7f99/full/%21640%2C/0/default"
+                        alt="Far West context for D&amp;C 115–120" />
+                    <h2 id="history-h">What are D&amp;C 115–120? <br> Brief History</h2>
 
-                    <p>These revelations were received in <strong>1834</strong> amid two big developments: the
-                        organization of the Church’s
-                        first <strong>high council</strong> in Kirtland (D&amp;C 102) and the march known as
-                        <strong>Zion’s Camp</strong> to aid displaced
-                        Saints in Missouri (D&amp;C 103–105). The Lord taught how Zion will be redeemed, what it means
-                        to endure trials,
-                        and principles of stewardship.
+                    <p>These revelations came in <strong>1838</strong> as the Saints gathered in <strong>Far West,
+                            Missouri</strong>. The Lord
+                        revealed the proper <strong>name of His Church</strong> (D&amp;C 115), called Zion to be a
+                        <strong>refuge</strong>, honored
+                        <strong>sacrifice</strong> (D&amp;C 117), and established the <strong>law of tithing</strong>
+                        (D&amp;C 119–120).
                     </p>
 
                     <ul class="inline">
-                        <li><strong>D&amp;C 102:</strong> minutes organizing the high council; procedures for membership
-                            councils.</li>
-                        <li><strong>D&amp;C 103:</strong> call to gather the Camp of Israel and the promise that “the
-                            redemption of Zion must needs come by power.”</li>
-                        <li><strong>D&amp;C 104:</strong> counsel on stewardships and temporal affairs—“the earth is
-                            full, and there is enough and to spare.”</li>
-                        <li><strong>D&amp;C 105:</strong> the Lord pauses the march and teaches that blessings come
-                            after trials of faith and that Zion will be redeemed in His time.</li>
+                        <li><strong>D&amp;C 115:</strong> the Church’s name; “arise and shine forth; … a refuge from the
+                            storm.”</li>
+                        <li><strong>D&amp;C 117:</strong> the Lord prizes consecrated sacrifice above increase.</li>
+                        <li><strong>D&amp;C 119–120:</strong> tithing and the disposition of sacred funds “by the Lord’s
+                            voice.”</li>
                     </ul>
                 </section>
 
                 <!-- SECTION: ALL LESSON SCRIPTURES -->
-                <section class="card" aria-labelledby="all-scripts-h">
+                <section class="card" aria-labelledby="all-scripts-h" id="lost">
                     <img class="section-img"
                         src="https://www.churchofjesuschrist.org/imgs/ee0eb1f5ce7003451f83910b5116f973169f5389/full/%21500%2C/0/default"
                         alt="All lesson scriptures" />
-                    <h2 id="all-scripts-h">All Lesson Scriptures (D&amp;C 102–105)</h2>
+                    <h2 id="all-scripts-h">LOST❓<br> We are Here: Lesson Scriptures (D&amp;C 115–120)</h2>
 
                     <ol class="scripture-list">
                         <li><a target="_blank" rel="noopener"
-                                href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/102?lang=eng&amp;id=p12-p23#p12">
-                                D&amp;C 102:12–23</a> — Membership councils (purpose &amp; procedure)</li>
+                                href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/115?lang=eng&id=p3-p6#p3">
+                                D&amp;C 115:3–6</a> — Name of the Church; arise and shine forth; refuge from the storm
+                        </li>
 
                         <li><a target="_blank" rel="noopener"
-                                href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/103?lang=eng&amp;id=p1-p12,p36#p1">
-                                D&amp;C 103:1–12, 36</a> — The call to Zion’s Camp; Zion’s redemption “by power”</li>
+                                href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/117?lang=eng&id=p11-p13#p11">
+                                D&amp;C 117:11–13</a> — “His sacrifice shall be more sacred … than his increase”</li>
 
                         <li><a target="_blank" rel="noopener"
-                                href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/104?lang=eng&amp;id=p11-p18,p78-p83#p11">
-                                D&amp;C 104:11–18; 78–83</a> — Stewardship and temporal blessings</li>
+                                href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/119?lang=eng&id=p4-p6#p4">
+                                D&amp;C 119:4–6</a> — The law of tithing and sanctification</li>
 
                         <li><a target="_blank" rel="noopener"
-                                href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/105?lang=eng&amp;id=p1-p19#p1">
-                                D&amp;C 105:1–19</a> — After tribulation comes blessing; the Lord’s timing for Zion</li>
+                                href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/120?lang=eng&id=p1#p1">
+                                D&amp;C 120:1</a> — Disposition of tithes by presiding councils</li>
                     </ol>
                 </section>
 
@@ -139,68 +157,69 @@
                     <img class="section-img"
                         src="https://content.churchofjesuschrist.org/acp/bc/cp/Europe/United%20Kingdom/news/2024/04-april/1200x675/rediscovering-the-scriptures-through-a-childs-eyes-1.jpeg"
                         alt="Illustration for key verses" />
-                    <img src="images/scripture.png" alt="Scripture Icon" srcset="" width="30px">
+                    <img src="images/scripture.png" alt="Scripture Icon" width="30">
                     <h2 id="verses-h">Key Verses</h2>
                     <ul>
-                        <li><strong><a class="verse" data-modal="dc103-12"
-                                    href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/103?lang=eng&amp;id=p12#p12"
-                                    target="_blank" rel="noopener"
-                                    aria-label="Open D&amp;C 103:12 in Church App">D&amp;C 103:12
+                        <li><strong><a class="verse" data-modal="dc115-5-6"
+                                    href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/115?lang=eng&id=p5-p6#p5"
+                                    target="_blank" rel="noopener" aria-label="Open D&C 115:5–6 in Church App">D&amp;C
+                                    115:5–6
                                     <svg viewBox="0 0 24 24" aria-hidden="true">
                                         <path fill="currentColor"
                                             d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z" />
                                     </svg>
-                                </a></strong> — After much tribulation, blessings follow.</li>
+                                </a></strong> — Arise and shine forth; a refuge from the storm.</li>
 
-                        <li><strong><a class="verse" data-modal="dc103-15"
-                                    href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/103?lang=eng&amp;id=p15#p15"
-                                    target="_blank" rel="noopener"
-                                    aria-label="Open D&amp;C 103:15 in Church App">D&amp;C 103:15
+                        <li><strong><a class="verse" data-modal="dc117-13"
+                                    href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/117?lang=eng&id=p13#p13"
+                                    target="_blank" rel="noopener" aria-label="Open D&C 117:13 in Church App">D&amp;C
+                                    117:13
                                     <svg viewBox="0 0 24 24" aria-hidden="true">
                                         <path fill="currentColor"
                                             d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z" />
                                     </svg>
-                                </a></strong> — “The redemption of Zion must needs come by power.”</li>
+                                </a></strong> — “His sacrifice shall be more sacred … than his increase.”</li>
 
-                        <li><strong><a class="verse" data-modal="dc104-17"
-                                    href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/104?lang=eng&amp;id=p17#p17"
-                                    target="_blank" rel="noopener"
-                                    aria-label="Open D&amp;C 104:17 in Church App">D&amp;C 104:17
+                        <li><strong><a class="verse" data-modal="dc119-4"
+                                    href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/119?lang=eng&id=p4#p4"
+                                    target="_blank" rel="noopener" aria-label="Open D&C 119:4 in Church App">D&amp;C
+                                    119:4
                                     <svg viewBox="0 0 24 24" aria-hidden="true">
                                         <path fill="currentColor"
                                             d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z" />
                                     </svg>
-                                </a></strong> — “The earth is full, and there is enough and to spare.”</li>
+                                </a></strong> — The law of tithing and sanctification.</li>
                     </ul>
                 </section>
 
                 <!-- SECTION: LESSONS -->
-                <section class="card" aria-labelledby="pattern-h">
+                <section class="card" aria-labelledby="pattern-h" id="higlights">
                     <img class="section-img"
                         src="https://www.allthewayleadership.com/wp-content/uploads/2022/04/lessons-learned-SYLVIE.jpg"
-                        alt="Illustration for lessons from Zion’s Camp" />
-                    <h2 id="pattern-h"><img src="images/temple.png" alt="Temple Icon" srcset="" width="30px"> Lessons
-                        from Zion’s Camp</h2>
+                        alt="Illustration for lesson takeaways" />
+                    <h2 id="pattern-h"><img src="images/temple.png" alt="Temple Icon" width="30"> Lesson Highlights</h2>
                     <ul>
-                        <li>Follow the Lord’s prophet even when outcomes differ from expectations (D&amp;C 105).</li>
-                        <li>Build Zion on righteousness and unity—contention halts progress (D&amp;C 103; 105:38–40).
-                        </li>
-                        <li>Trust the Lord’s timing; blessings come after trials of faith (D&amp;C 103:12–13).</li>
+                        <li>Bear the Savior’s name and mission — this is His Church (D&amp;C 115:3–6).</li>
+                        <li>Build Zion as a refuge and standard for the nations (D&amp;C 115:5–6).</li>
+                        <li>Offer consecrated sacrifice the Lord will sanctify (D&amp;C 117:13).</li>
+                        <li>Live the law of tithing; the Lord directs sacred funds (D&amp;C 119–120).</li>
                     </ul>
                 </section>
 
                 <!-- SECTION: PRACTICES -->
-                <section class="card" aria-labelledby="practice-h">
+                <section class="card" aria-labelledby="practice-h" id="tryme">
                     <img class="section-img"
                         src="https://assets.churchofjesuschrist.org/e5/35/e53547d59f1f2a7920bea05cbac7ea42856cc095/faith_action_beach.jpeg"
                         alt="Illustration for weekly practices" />
-                    <img src="images/try.png" alt="Try Icon" srcset="" width="80px">
+                    <img src="images/try.png" alt="Try Icon" width="80">
                     <h2 id="practice-h"> Try one simple practice this week</h2>
                     <ul>
-                        <li><strong>Be a peacemaker:</strong> repair one relationship (D&amp;C 105:38–40).</li>
-                        <li><strong>Stewardship:</strong> share one temporal blessing with someone in need (D&amp;C
-                            104:17).</li>
-                        <li><strong>Light:</strong> do one quiet act that lifts someone’s faith (D&amp;C 103:9).</li>
+                        <li><strong>Shine forth:</strong> give one act of spiritual refuge to someone (D&amp;C 115:5–6).
+                        </li>
+                        <li><strong>Sacred sacrifice:</strong> give up one lesser thing for a holier purpose (D&amp;C
+                            117:13).</li>
+                        <li><strong>Tithing faith:</strong> record one way the Lord opens the windows of heaven (D&amp;C
+                            119).</li>
                     </ul>
                     <p class="note">Tip: Keep it easy. Small and steady wins.</p>
                 </section>
@@ -210,10 +229,9 @@
                     <img class="section-img"
                         src="https://www.visitphilly.com/wp-content/uploads/2017/12/RodinMuseum2-JSmith-1169-587.jpg"
                         alt="Illustration for reflection prompt" />
-                    <img src="images/thought.png" alt="Scripture Icon" srcset="" width="80px">
+                    <img src="images/thought.png" alt="Thought Icon" width="80">
                     <h2 id="reflect-h">Reflection Prompt</h2>
-                    <p>Where is the Lord inviting me to build Zion in my heart or home this week? <br> What single
-                        action will I take before next Sunday?</p>
+                    <p>What offering can I make sacred to the Lord this week? <br> How can my home be a refuge?</p>
                     <p class="note">Write one sentence each day. Share one sentence next class.</p>
                 </section>
 
@@ -244,7 +262,7 @@
     </main>
 
     <footer>
-        <p>© 2025 — Brother Ezra D. Rivera - D&amp;C 102–105</p>
+        <p>© 2025 — Brother Ezra D. Rivera — D&amp;C 115–120</p>
     </footer>
 
     <!-- Modals (one per scripture) -->

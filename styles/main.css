@@ -421,3 +421,149 @@ footer {
     opacity: .7;
     margin-left: .35rem;
 }
+
+/* Smooth scroll to the Q&A anchor */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Top Q&A jump button spacing */
+.top-ask {
+    margin-top: .6rem;
+    display: flex;
+    justify-content: center;
+}
+
+.top-ask .btn {
+    font-weight: 800;
+    padding: .7rem 1.1rem;
+}
+
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Account for sticky nav when jumping to anchors */
+:root {
+    --nav-h: 64px;
+}
+
+h2[id],
+section[id] {
+    /* add safe-area inset so anchors never hide under the bar (notches, etc.) */
+    scroll-margin-top: calc(var(--nav-h) + env(safe-area-inset-top) + 12px);
+}
+
+/* Sticky nav */
+.site-nav {
+    position: fixed;
+    /* was: sticky */
+    left: 0;
+    right: 0;
+    top: max(0px, env(safe-area-inset-top));
+    z-index: 9999;
+    width: 100%;
+}
+
+/* Reserve space so content isn't hidden behind the fixed bar */
+body {
+    padding-top: calc(var(--nav-h) + env(safe-area-inset-top));
+}
+
+/* Ensure the slide-down menu sits just below the fixed bar */
+.menu {
+    position: fixed;
+    top: calc(var(--nav-h) + max(0px, env(safe-area-inset-top)));
+    left: 0;
+    right: 0;
+    background: #1c0b12;
+    list-style: none;
+    margin: 0;
+    padding: .5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .15);
+    transform: translateY(-120%);
+    transition: transform .25s ease;
+}
+body.nav-open .menu { transform: translateY(0); }
+.menu a {
+    display: block;
+    padding: .9rem 1rem;
+    border-radius: 0;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    text-align: center;
+    transition: background-color .2s ease, color .2s ease;
+}
+
+.menu a:hover,
+.menu a:focus-visible {
+    background: rgba(255,255,255,.12);
+    outline: none;
+}
+
+/* Ensure the menu spans full width logically in grid (though it's fixed-positioned) */
+.menu { grid-column: 1 / -1; }
+
+/* Hamburger is ALWAYS visible */
+.hamburger {
+    display: inline-block;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,.25);
+    border-radius: .6rem;
+    width: 44px;
+    height: 36px;
+    position: relative;
+    grid-column: 3;
+    justify-self: end;
+}
+.hamburger span {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform .25s, top .25s, opacity .25s;
+}
+.hamburger span:nth-child(1){ top: 10px; }
+.hamburger span:nth-child(2){ top: 17px; }
+.hamburger span:nth-child(3){ top: 24px; }
+body.nav-open .hamburger span:nth-child(1){ top: 17px; transform: rotate(45deg); }
+body.nav-open .hamburger span:nth-child(2){ opacity: 0; }
+body.nav-open .hamburger span:nth-child(3){ top: 17px; transform: rotate(-45deg); }
+
+/* --- Keep the nav visible all the way down --- */
+.site-nav {
+    position: fixed;
+    /* was: sticky */
+    left: 0;
+    right: 0;
+    top: max(0px, env(safe-area-inset-top));
+    z-index: 9999;
+    width: 100%;
+}
+
+.nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* center brand, hamburger on right */
+    align-items: center;
+    /* add safe-area top padding to prevent the “cut off” look */
+    padding: calc(.6rem + env(safe-area-inset-top)) 1rem .6rem 1rem;
+    overflow: visible;
+}
+
+.brand {
+    font-family: "DM Serif Text", serif;
+    font-size: 3.1rem;
+    color: #fff;
+    text-decoration: none;
+    grid-column: 2;
+    justify-self: center;
+}
