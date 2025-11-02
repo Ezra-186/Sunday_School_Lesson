@@ -4,20 +4,20 @@
 
 // ------------- Verse data -------------
 const VERSES = {
-    'dc115-5-6': {
-        title: 'D&C 115:5–6',
-        text: 'Arise and shine forth, that thy light may be a standard for the nations ... for a defense, and for a refuge from the storm.',
-        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/115?lang=eng&id=p5-p6#p5'
+    'dc121-7-8': {
+        title: 'D&C 121:7–8',
+        text: 'Thy adversity and thine afflictions shall be but a small moment; and then, if thou endure it well, God shall exalt thee on high; thou shalt triumph over all thy foes.',
+        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/121?lang=eng&id=p7-p8#p7'
     },
-    'dc117-13': {
-        title: 'D&C 117:13',
-        text: 'His sacrifice shall be more sacred unto me than his increase.',
-        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/117?lang=eng&id=p13#p13'
+    'dc121-41-42': {
+        title: 'D&C 121:41–42',
+        text: 'No power or influence can or ought to be maintained only by persuasion, by long-suffering, by gentleness and meekness, and by love unfeigned; by kindness, and pure knowledge.',
+        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/121?lang=eng&id=p41-p42#p41'
     },
-    'dc119-4': {
-        title: 'D&C 119:4',
-        text: 'This shall be a standing law ... after that, those who have thus been tithed shall pay one-tenth of all their interest annually.',
-        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/119?lang=eng&id=p4#p4'
+    'dc122-8': {
+        title: 'D&C 122:8',
+        text: 'The Son of Man hath descended below them all. Art thou greater than he?',
+        url: 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/122?lang=eng&id=p8#p8'
     }
 };
 
