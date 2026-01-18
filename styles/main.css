@@ -362,6 +362,12 @@ footer {
     font-size: .85rem;
 }
 
+.pill[data-open-feed],
+.teacher-cta .pill {
+    position: relative;
+    padding-right: 1.4rem;
+}
+
 .nav-btn.active {
     color: #fff;
 }
@@ -395,6 +401,15 @@ footer {
 
 .badge.show {
     display: inline-flex;
+}
+
+.badge.dot {
+    width: 12px;
+    min-width: 12px;
+    height: 12px;
+    padding: 0;
+    right: 8px;
+    top: 8px;
 }
 
 /* Live sheet */

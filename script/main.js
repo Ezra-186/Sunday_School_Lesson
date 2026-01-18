@@ -77,15 +77,18 @@ function setNewCount(count) {
 }
 
 function updateBadgeUI() {
-    const badge = document.getElementById("qaBadge");
-    if (!badge) return;
-    if (state.newCount <= 0) {
-        badge.classList.remove("show");
-        badge.textContent = "";
-        return;
-    }
-    badge.classList.add("show");
-    badge.textContent = state.newCount > 9 ? "9+" : String(state.newCount);
+    const badges = document.querySelectorAll(".qa-badge");
+    badges.forEach((badge) => {
+        if (state.newCount <= 0) {
+            badge.classList.remove("show");
+            badge.textContent = "";
+        } else {
+            badge.classList.add("show");
+            badge.textContent = badge.classList.contains("dot")
+                ? "" // dot badges just show the dot
+                : (state.newCount > 9 ? "9+" : String(state.newCount));
+        }
+    });
 }
 
 // ------------- Modal wiring -------------
