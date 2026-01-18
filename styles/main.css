@@ -346,6 +346,7 @@ footer {
     background: none;
     color: var(--muted);
     font: inherit;
+    position: relative;
     display: grid;
     gap: .1rem;
     place-items: center;
