@@ -4,20 +4,20 @@
 
 // ------------- Verse data -------------
 const VERSES = {
-    'gen1-1-5': {
-        title: 'Genesis 1:1–5',
-        text: 'In the beginning God created the heaven and the earth… And God said, Let there be light: and there was light.',
-        url: 'https://www.churchofjesuschrist.org/study/scriptures/ot/gen/1?lang=eng&id=p1-p5#p1'
+    "noah-prophet": {
+        title: "Listen to the living prophet",
+        text: "If a man had accepted ancient scripture in Noah’s day but refused Noah’s revelation, and failed to board the ark, he would have been drowned. Always the words of the living prophets matter most. BY: Ezra Taft Benson, “Listen to a Prophet’s Voice,” October 1972.",
+        url: "https://www.churchofjesuschrist.org/study/general-conference/1972/10/listen-to-a-prophets-voice?lang=eng"
     },
-    'gen1-26-27': {
-        title: 'Genesis 1:26–27',
-        text: 'And God said, Let us make man in our image, after our likeness… male and female created he them.',
-        url: 'https://www.churchofjesuschrist.org/study/scriptures/ot/gen/1?lang=eng&id=p26-p27#p26'
+    "personal-ark": {
+        title: "Build a personal ark before the rain",
+        text: "We all need to build a personal ark, to fortify ourselves against a rising tide of evil, to protect ourselves and our families against the floodwaters of iniquity around us. We should not wait until it starts raining, but prepare in advance. BY: Elder W. Don Ladd, “Make Thee an Ark,” October 1994.",
+        url: "https://www.churchofjesuschrist.org/study/general-conference/1994/10/make-thee-an-ark?lang=eng"
     },
-    'gen2-2-3': {
-        title: 'Genesis 2:2–3',
-        text: 'On the seventh day God ended his work… and God blessed the seventh day, and sanctified it.',
-        url: 'https://www.churchofjesuschrist.org/study/scriptures/ot/gen/2?lang=eng&id=p2-p3#p2'
+    "faith-before-rain": {
+        title: "Faith comes first",
+        text: "Faith precedes the miracle. It was not raining when Noah was commanded to build an ark. First came the test of faith, and then the miracle. Cast out doubt. Cultivate faith. BY: President Thomas S. Monson, “The Call to Serve,” October 2000.",
+        url: "https://www.churchofjesuschrist.org/study/general-conference/2000/10/the-call-to-serve?lang=eng"
     }
 };
 
